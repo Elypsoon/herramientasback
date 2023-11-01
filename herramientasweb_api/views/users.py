@@ -39,7 +39,15 @@ class UsersAll(generics.CreateAPIView):
         return Response(lista, 200)
 
 class UsersView(generics.CreateAPIView):
+    #Obtener usuario por ID
+    # permission_classes = (permissions.IsAuthenticated,)
+    def get(self, request, *args, **kwargs):
+        user = get_object_or_404(Profiles, id = request.GET.get("id"))
+        user = ProfilesSerializer(user, many=False).data
 
+        return Response(user, 200)
+    
+    #Registrar nuevo usuario
     @transaction.atomic
     def post(self, request, *args, **kwargs):
 
