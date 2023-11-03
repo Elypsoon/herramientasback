@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from herramientasweb_api.views import bootstrap
 from herramientasweb_api.views import users
+from herramientasweb_api.views import materias
 from herramientasweb_api.views import auth
 
 urlpatterns = [
@@ -31,5 +32,10 @@ urlpatterns = [
     #Login
         path('token/', auth.CustomAuthToken.as_view()),
     #Logout
-        path('logout/', auth.Logout.as_view())
+        path('logout/', auth.Logout.as_view()),
+        
+    #Create subject
+        path('materias/', materias.MateriasView.as_view()),
+    #User Data
+        path('lista-materias/', materias.MateriasAll.as_view())
 ]

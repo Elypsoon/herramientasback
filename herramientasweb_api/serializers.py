@@ -23,3 +23,26 @@ class ProfilesAllSerializer(serializers.ModelSerializer):
         model = Profiles
         fields = '__all__'
         depth = 1
+        
+        
+class MatSerializer(serializers.ModelSerializer):
+    nrc = serializers.IntegerField(read_only=True)
+    nombre = serializers.CharField(required=True)
+
+    class Meta:
+        model = Materias
+        fields = ('nrc','nombre')
+
+class MateriasSerializer(serializers.ModelSerializer):
+    materia=MatSerializer(read_only=True)
+    class Meta:
+        model = Materias
+        fields = "__all__"
+class MateriasAllSerializer(serializers.ModelSerializer):
+    #user=UserSerializer(read_only=True)
+    class Meta:
+        model = Materias
+        fields = '__all__'
+        depth = 1
+        
+
