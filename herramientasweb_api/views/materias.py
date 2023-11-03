@@ -68,3 +68,28 @@ class MateriasView(generics.CreateAPIView):
             return Response({"subject_created_nrc": materia.nrc }, 201)
 
         return Response(materia.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class MateriasViewEdit(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    def put(self, request, *args, **kwargs):
+        # iduser=request.data["id"]
+        materia = get_object_or_404(Materias, nrc=request.data["nrc"])
+        materia.nombre = request.data["nombre"]
+        materia.seccion = request.data["seccion"]
+        materia.dias = request.data["dias"]
+        materia.horaInicio = request.data["horaInicio"]
+        materia.horaFin = request.data["horaFin"]
+        materia.salon = request.data["salon"]
+        materia.programa = request.data["programa"]
+        materia.save()
+        mat = MateriasSerializer(materia, many=False).data
+
+        return Response(mat,200)
+    
+    def delete(self, request, *args, **kwargs):
+        materia = get_object_or_404(Materias, nrc=request.GET.get("nrc"))
+        try:
+            materia.user.delete()
+            return Response({"details":"Usuario eliminado"},200)
+        except Exception as e:
+            return Response({"details":"Algo pasó al eliminar"},400)

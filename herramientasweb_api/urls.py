@@ -36,6 +36,8 @@ urlpatterns = [
         
     #Create subject
         path('materias/', materias.MateriasView.as_view()),
-    #User Data
-        path('lista-materias/', materias.MateriasAll.as_view())
+    #Subject Data
+        path('lista-materias/', materias.MateriasAll.as_view()),
+    #Edit subject
+        path('materias-edit/', materias.MateriasViewEdit.as_view())
 ]
