@@ -56,7 +56,7 @@ class MateriasView(generics.CreateAPIView):
 
             #Create a profile for the subject
             materia = Materias.objects.create(nrc=request.data["nrc"],
-                                              nombre= request.data["nombreMateria"],
+                                              nombre= request.data["nombre"],
                                               seccion= request.data["seccion"],
                                               dias= request.data["dias"],
                                               horaInicio= request.data["horaInicio"],
@@ -89,7 +89,7 @@ class MateriasViewEdit(generics.CreateAPIView):
     def delete(self, request, *args, **kwargs):
         materia = get_object_or_404(Materias, nrc=request.GET.get("nrc"))
         try:
-            materia.user.delete()
-            return Response({"details":"Usuario eliminado"},200)
+            materia.delete()
+            return Response({"details":"Materia eliminada"},200)
         except Exception as e:
             return Response({"details":"Algo pasó al eliminar"},400)
